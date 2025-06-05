@@ -45,7 +45,6 @@ export class Snake {
 
   #isColliding = (head: { x: number; y: number }) => {
     const { canvas } = getCanvasOptions(this.#canvasRef.value)
-    console.log(head.y, canvas.style.height)
     return (
       head.x < 0 ||
       head.x > parseInt(canvas.style.width) - this.#CELL_SIZE ||
@@ -69,9 +68,18 @@ export class Snake {
     return true
   }
 
-  grow = () => {
+  #grow = () => {
     const tail = { ...this.#body[this.#body.length - 1] }
     this.#body.push(tail)
+  }
+
+  eatingFood = (head: { x: number; y: number }, food: { x: number; y: number }) => {
+    const isEating = head.x === food.x && head.y === food.y
+    if (isEating) {
+      this.#grow()
+      return true
+    }
+    return false
   }
 
   #handleKeyDown = (e: KeyboardEvent) => {

@@ -25,9 +25,9 @@ onMounted(() => {
     <canvas id="game" ref="canvas"></canvas>
   </div>
   <div v-if="game.isGameOver.value" class="game-over-wrapper">
-    <div>
+    <div style="text-align: center">
       <h1>Game Over</h1>
-      <p>Score: {{ game.score }}</p>
+      <p>Score: {{ game.getScore() }}</p>
       <button @click="game.reset">Restart</button>
     </div>
   </div>

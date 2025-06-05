@@ -25,4 +25,11 @@ export class Renderer {
       ctx.fillRect(segment.x + 1, segment.y + 1, this.cellSize - 2, this.cellSize - 2)
     })
   }
+
+  drawFood = (food: { x: number; y: number }) => {
+    const { ctx } = getCanvasOptions(this.canvasRef.value)
+
+    ctx.fillStyle = 'red'
+    ctx.fillRect(food.x + 1, food.y + 1, this.cellSize - 2, this.cellSize - 2)
+  }
 }
