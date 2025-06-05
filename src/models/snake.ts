@@ -44,9 +44,13 @@ export class Snake {
   }
 
   #isColliding = (head: { x: number; y: number }) => {
-    const { canvas } = getCanvasOptions(this.#canvasRef)
+    const { canvas } = getCanvasOptions(this.#canvasRef.value)
+    console.log(head.y, canvas.style.height)
     return (
-      head.x < 0 || head.x > canvas.width - this.#CELL_SIZE || head.y < 0 || head.y > canvas.height
+      head.x < 0 ||
+      head.x > parseInt(canvas.style.width) - this.#CELL_SIZE ||
+      head.y < 0 ||
+      head.y > parseInt(canvas.style.height) - this.#CELL_SIZE
     )
   }
 

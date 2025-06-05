@@ -12,23 +12,29 @@ type ConstructorParams = {
 export class Game {
   isGameOver = ref(false)
   score = ref(0)
-  canvas: Ref<HTMLCanvasElement | null> = ref(null)
+  canvasRef: Ref<HTMLCanvasElement | null> = ref(null)
   snake: Snake
   #renderer: Renderer
   #interval = 0
+  $cellSize: number
 
   initializeCanvas = () => {
-    const { canvas, ctx } = getCanvasOptions(this.canvas)
+    const { canvas, ctx } = getCanvasOptions(this.canvasRef.value)
 
-    const width = window.innerWidth
-    const height = window.innerHeight
+    const screenWidth = window.innerWidth
+    const screenHeight = window.innerHeight
     const dpr = window.devicePixelRatio || 1
 
-    canvas.width = width * dpr
-    canvas.height = height * dpr
+    // Рассчитываем размеры canvas, кратные размеру ячейки
+    const gameWidth = Math.floor(screenWidth / this.$cellSize) * this.$cellSize
+    const gameHeight = Math.floor(screenHeight / this.$cellSize) * this.$cellSize
 
-    canvas.style.width = `${width}px`
-    canvas.style.height = `${height}px`
+    // Устанавливаем размеры canvas точно по игровому полю
+    canvas.width = gameWidth * dpr
+    canvas.height = gameHeight * dpr
+
+    canvas.style.width = `${gameWidth}px`
+    canvas.style.height = `${gameHeight}px`
 
     ctx.scale(dpr, dpr)
 
@@ -36,8 +42,9 @@ export class Game {
   }
 
   constructor({ canvas, snake, cellSize }: ConstructorParams) {
-    this.canvas = canvas
+    this.canvasRef = canvas
     this.snake = snake
+    this.$cellSize = cellSize
     this.#renderer = new Renderer(canvas, cellSize)
   }
 

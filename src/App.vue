@@ -21,7 +21,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <canvas id="game" ref="canvas"></canvas>
+  <div class="canvas-wrapper">
+    <canvas id="game" ref="canvas"></canvas>
+  </div>
   <div v-if="game.isGameOver.value" class="game-over-wrapper">
     <div>
       <h1>Game Over</h1>
@@ -32,6 +34,15 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  height: 100vh;
+  width: 100vw;
+}
+
 #game {
   display: block;
 }
