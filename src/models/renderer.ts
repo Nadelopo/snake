@@ -14,7 +14,9 @@ export class Renderer {
     const { canvas, ctx } = getCanvasOptions(this.canvasRef.value)
 
     ctx.fillStyle = '#1c1c1c'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    const width = parseInt(canvas.style.width)
+    const height = parseInt(canvas.style.height)
+    ctx.fillRect(0, 0, width, height)
   }
 
   drawSnake = (body: { x: number; y: number }[]) => {
