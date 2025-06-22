@@ -43,7 +43,7 @@ export class Snake {
     this.#setDirection(this.#directions.ArrowRight)
   }
 
-  #isColliding = (head: { x: number; y: number }) => {
+  #isCollidingWithWall = (head: { x: number; y: number }) => {
     const { canvas } = getCanvasOptions(this.#canvasRef.value)
     return (
       head.x < 0 ||
@@ -53,6 +53,10 @@ export class Snake {
     )
   }
 
+  #isCollidingWithBody = (head: { x: number; y: number }) => {
+    return this.#body.some((body) => body.x === head.x && body.y === head.y)
+  }
+
   #isOpposite = (a: { x: number; y: number }, b: { x: number; y: number }) =>
     a.x + b.x === 0 && a.y + b.y === 0
 
@@ -60,7 +64,7 @@ export class Snake {
     const head = { ...this.#body[0] }
     head.x += this.#currentDirection.x
     head.y += this.#currentDirection.y
-    if (this.#isColliding(head)) {
+    if (this.#isCollidingWithWall(head) || this.#isCollidingWithBody(head)) {
       return false
     }
     this.#body.unshift(head)
